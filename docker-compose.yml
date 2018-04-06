@@ -14,11 +14,9 @@ version: '3'
 services:
   # MySQL dbs
   mysql:
-    build: 
-      context: ./
-      dockerfile: ./mysql/Dockerfile
+    build: ./mysql
     environment:
-      MYSQL_ROOT_PASSWORD: *********
+      MYSQL_ROOT_PASSWORD: *******************
   
   # Elastic search indexes
   elasticsearch:
@@ -30,9 +28,7 @@ services:
 
   # Php frontend
   website:
-    build:
-      context: ./
-      dockerfile: ./website/Dockerfile
+    build: ./website
     ports:
       - 80:80
     volumes: 
