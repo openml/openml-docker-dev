@@ -17,11 +17,13 @@ For Linux: docker commands assume you can use docker without sudo (your user is 
 
 ## Clone this repository & clone OpenML branch inside (temporary: using enable-docker-changes branch)
 
+```
 git clone https://github.com/openml/openml-docker-dev.git
 
 cd openml-docker-dev
 
 git clone -b enable-docker-changes https://github.com/openml/OpenML.git
+```
 
 ![](images/2018-04-07-00-57-29.png)
 
@@ -55,7 +57,9 @@ Disable email activation in OpenML\openml_OS\ion_auth.php
 
 ## Build images & start service containers
 
+```
 docker-compose up
+```
 
 (images can take few minutes to build for the first time, after start wait a few seconds for services to be ready)
 
@@ -71,17 +75,27 @@ docker-compose up
 
 ![](images/2018-04-07-01-14-02.png)
 
+
 ## Init dbs, admin user & elastic search indexes
 
 Execute in a new window/shell:
 
+```
 docker exec -it openmldockerdev_website_1 php index.php cron init_local_env
+```
 
 (note the generated admin password, and wait to finish, can take 1-2mins)
 
 ![](images/2018-04-07-01-15-54.png)
 
 ![](images/2018-04-07-01-21-47.png) 
+
+## Change data folder owner to www-data apache user in container, allow for logs/uploads in data folder, resets log files created previous step
+
+Execute in a new window/shell:
+```
+docker exec -it openmldockerdev_website_1 chown -R www-data:www-data /var/www/html/data
+```
 
 ## Final tests
 
