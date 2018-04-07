@@ -19,7 +19,7 @@ For Linux: docker commands assume you can use docker without sudo (your user is 
 
 
 ## Clone this repository & clone OpenML repo/branch inside 
-### (temporary: using enable-docker-changes branch)
+### (temporary: using *enable-docker-changes* branch)
 
 ```
 git clone https://github.com/openml/openml-docker-dev.git
@@ -34,7 +34,8 @@ git clone -b enable-docker-changes https://github.com/openml/OpenML.git
 ## Fill in Docker-compose Configuration
 
 edit *docker-compose.yml* mainly define a secure mysql password:
-(leaving the default will make docker-compose fail)
+
+**(leaving the default will make docker-compose fail)**
 
 ![](images/2018-04-07-01-00-13.png)
 
@@ -56,17 +57,17 @@ Check & change *BASE_CONFIG.php* as appropriate, ex: (mysql password)
 
 ![](images/2018-04-07-01-04-02.png)
 
-Disable email activation in OpenML\openml_OS\ion_auth.php
+Disable email activation in *OpenML\openml_OS\ion_auth.php*
 
 ![](images/2018-04-07-01-07-21.png)
 
-## Build images & start service containers
+## Build images & start service containers using docker-compose
 
 ```
 docker-compose up
 ```
 
-(images can take few minutes to build for the first time, after start wait a few seconds for services to be ready)
+(images can take few minutes to build for the first time, after start wait a few seconds for services to be ready, ex: MySQL ready for connections)
 
 ![](images/2018-04-07-01-11-21.png)
 
@@ -89,20 +90,20 @@ Execute in a new window/shell:
 docker exec -it openmldockerdev_website_1 php index.php cron init_local_env
 ```
 
-(note the generated admin password, and wait to finish, can take 1-2mins)
+(take note the generated admin password, and wait to finish, can take 1-2mins)
 
 ![](images/2018-04-07-01-15-54.png)
 
 ![](images/2018-04-07-01-21-47.png) 
 
-## Change data folder owner to www-data apache user in container, allow for logs/uploads in data folder, resets log files created previous step
+## Change data folder owner to www-data apache user in container, allow for logs/uploads in data folder, resets log file permissions created in previous init step
 
 Execute in a new window/shell:
 ```
 docker exec -it openmldockerdev_website_1 chown -R www-data:www-data /var/www/html/data
 ```
 
-## Final tests
+## Should be running now! Final tests:
 
 ### Login on http://localhost with admin and saved password
 
