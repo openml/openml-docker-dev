@@ -1,18 +1,27 @@
-# OpenML Docker compose for local development setup
+# OpenML Docker compose images/scripts for local development setup (Linux/Windows)
 
 # Issues/limitations
 - current only works on port 80
 - wiki powered by gollum is not working yet
 
+# Requirements
+
+- Git
+- Docker
+
+On Linux commands assume you can use docker without sudo (your user is in docker group). Otherwise prefix docker commands with sudo. 
+
+
 # Instructions
 
-## Clone this repository & clone OpenML branch inside
+
+## Clone this repository & clone OpenML branch inside (temporary: using enable-docker-changes branch)
 
 git clone https://github.com/openml/openml-docker-dev.git
 
 cd openml-docker-dev
 
-git clone https://github.com/openml/OpenML.git
+git clone -b enable-docker-changes https://github.com/openml/OpenML.git
 
 ![](images/2018-04-07-00-57-29.png)
 
