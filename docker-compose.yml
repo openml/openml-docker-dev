@@ -16,7 +16,7 @@ services:
   mysql:
     build: ./mysql
     environment:
-      MYSQL_ROOT_PASSWORD: openml
+      MYSQL_ROOT_PASSWORD: *******************
   
   # Elastic search indexes
   elasticsearch:
