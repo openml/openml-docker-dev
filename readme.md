@@ -18,8 +18,8 @@ For Linux: docker commands assume you can use docker without sudo (your user is 
 # Instructions
 
 
-## Clone this repository & clone OpenML branch inside 
-## (temporary: using enable-docker-changes branch)
+## Clone this repository & clone OpenML repo/branch inside 
+### (temporary: using enable-docker-changes branch)
 
 ```
 git clone https://github.com/openml/openml-docker-dev.git
@@ -33,16 +33,16 @@ git clone -b enable-docker-changes https://github.com/openml/OpenML.git
 
 ## Fill in Docker-compose Configuration
 
-mainly define a secure mysql password:
+edit *docker-compose.yml* mainly define a secure mysql password:
 (leaving the default will make docker-compose fail)
 
 ![](images/2018-04-07-01-00-13.png)
 
 ## Fill in OpenML Configuration file
 
-copy OpenML\openml_OS\config\BASE_CONFIG-BLANK.php to OpenML\openml_OS\config\BASE_CONFIG.php
+copy *OpenML\openml_OS\config\BASE_CONFIG-BLANK.php* to *OpenML\openml_OS\config\BASE_CONFIG.php*
 
-Check & change BASE_CONFIG.php as appropriate, ex: (mysql password)
+Check & change *BASE_CONFIG.php* as appropriate, ex: (mysql password)
 
 ![](images/2018-04-07-01-01-52.png)
 
