@@ -63,6 +63,8 @@ Disable email activation in *OpenML\openml_OS\ion_auth.php*
 
 ## Build images & start service containers using docker-compose
 
+on the openml-docker-dev root folder, where *docker-compose.yml* is located run:
+
 ```
 docker-compose up
 ```
@@ -84,7 +86,7 @@ docker-compose up
 
 ## Init dbs, admin user & elastic search indexes
 
-Execute in a new window/shell:
+Execute in a new window/shell: 
 
 ```
 docker exec -it openmldockerdev_website_1 php index.php cron init_local_env
