@@ -9,7 +9,7 @@
 - Git
 - Docker
 
-On Linux commands assume you can use docker without sudo (your user is in docker group). Otherwise prefix docker commands with sudo. 
+For Linux: docker commands assume you can use docker without sudo (your user is in docker group, ex: sudo usermod -aG docker $USER). Otherwise prefix docker commands with sudo. 
 
 
 # Instructions
