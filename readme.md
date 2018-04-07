@@ -19,13 +19,14 @@ git clone https://github.com/openml/OpenML.git
 ## Fill in Docker-compose Configuration
 
 mainly define a secure mysql password:
+
 ![](images/2018-04-07-01-00-13.png)
 
 ## Fill in OpenML Configuration file
 
 copy OpenML\openml_OS\config\BASE_CONFIG-BLANK.php to OpenML\openml_OS\config\BASE_CONFIG.php
 
-Check & change BASE_CONFIG as appropriate, ex: (mysql password)
+Check & change BASE_CONFIG.php as appropriate, ex: (mysql password)
 
 ![](images/2018-04-07-01-01-52.png)
 
@@ -91,7 +92,7 @@ docker exec -it openmldockerdev_website_1 php index.php cron init_local_env
 
 ![](images/2018-04-07-01-19-05.png)
 
-## Files in OpenML cloned repo are mounted inside the website container, any change will reflect immediately on the site
+### Note: Files in OpenML cloned repo are mounted inside the website container, any change will reflect immediately on the site
 
 
 
