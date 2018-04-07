@@ -9,14 +9,14 @@
 # TODO: gollum not working, CORS issue, needs apache mapping, local gollum install on website container?
 # OpenML main repo is mapped as volume, not copied within the built images, for enable development
    
-version: '3'
+version: '2'
 
 services:
   # MySQL dbs
   mysql:
     build: ./mysql
     environment:
-      MYSQL_ROOT_PASSWORD: *******************
+      MYSQL_ROOT_PASSWORD: openml
   
   # Elastic search indexes
   elasticsearch:
