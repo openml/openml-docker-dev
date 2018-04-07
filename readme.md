@@ -1,5 +1,8 @@
 # OpenML Docker compose images/scripts for local development setup (Linux/Windows)
 
+# **For local dev environment setup only, Insecure & Not for Production Setup**
+
+
 # Issues/limitations
 - current only works on port 80
 - wiki powered by gollum is not working yet
@@ -15,7 +18,8 @@ For Linux: docker commands assume you can use docker without sudo (your user is 
 # Instructions
 
 
-## Clone this repository & clone OpenML branch inside (temporary: using enable-docker-changes branch)
+## Clone this repository & clone OpenML branch inside 
+## (temporary: using enable-docker-changes branch)
 
 ```
 git clone https://github.com/openml/openml-docker-dev.git
@@ -30,6 +34,7 @@ git clone -b enable-docker-changes https://github.com/openml/OpenML.git
 ## Fill in Docker-compose Configuration
 
 mainly define a secure mysql password:
+(leaving the default will make docker-compose fail)
 
 ![](images/2018-04-07-01-00-13.png)
 
