@@ -63,7 +63,7 @@ services:
       - ./OpenML:/var/www/html
     
     # runs openml process_dataset java background task each 10 secs
-    command: /bin/bash -c 'while sleep 10;do api_key=5f0b74b33503e4ad4a7181a91e28719f; echo "API key:$$api_key";  java -Xmx4G -jar /var/www/html/openml_OS/third_party/OpenML/Java/evaluate.jar -config "server = http://website/;api_key = $$api_key" -f process_dataset;done'
+    command: /bin/bash -c 'while sleep 10;do api_key=`cat /openmlconfig/api_key.txt`; echo "API key:$$api_key";  java -Xmx4G -jar /var/www/html/openml_OS/third_party/OpenML/Java/evaluate.jar -config "server = http://website/;api_key = $$api_key" -f process_dataset;done'
 
   # OpenML Wiki, TODO: not working , CORS/cross domain issue
   gollum:
