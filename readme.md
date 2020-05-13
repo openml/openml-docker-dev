@@ -127,5 +127,11 @@ docker exec -it openmldockerdev_website_1 chown -R www-data:www-data /var/www/ht
 
 
 
-
-
+### Docker commands
+delete config/api_key.txt
+docker stop @(docker ps -a -q)
+docker ps -a 
+docker-compose down
+docker-compose up # Run in window 1
+docker exec -it openml-docker-dev_website_1 php index.php cron init_local_env # Run in window 2
+docker exec -it openmldockerdev_website_1 chown -R www-data:www-data /var/www/html/data
