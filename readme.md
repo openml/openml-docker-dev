@@ -27,6 +27,9 @@ git clone https://github.com/openml/openml-docker-dev.git
 cd openml-docker-dev
 
 git clone -b enable-docker-changes https://github.com/openml/OpenML.git
+
+
+
 ```
 
 ![](images/2018-04-07-00-57-29.png)
@@ -66,6 +69,8 @@ Disable email activation in *OpenML\openml_OS\ion_auth.php*
 on the openml-docker-dev root folder, where *docker-compose.yml* is located run:
 
 ```
+docker pull docker.elastic.co/elasticsearch/elasticsearch:6.8.2
+
 docker-compose up
 ```
 

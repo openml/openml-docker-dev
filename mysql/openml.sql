@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `openml`
 --
-
+CREATE DATABASE IF NOT EXISTS `openml` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `openml`;
 -- --------------------------------------------------------
 
 --
@@ -231,7 +232,12 @@ ALTER TABLE `thread`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`,`email`),
+  ADD UNIQUE KEY `session_hash` (`session_hash`),
+  ADD UNIQUE KEY `activation_selector` (`activation_selector`),
+  ADD UNIQUE KEY `forgotten_password_selector` (`forgotten_password_selector`),
+  ADD UNIQUE KEY `remember_selector` (`remember_selector`);
 
 --
 -- Indexes for table `users_groups`
@@ -277,7 +283,7 @@ ALTER TABLE `thread`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3375;
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
