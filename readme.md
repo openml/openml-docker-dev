@@ -5,7 +5,7 @@
 
 # Issues/limitations
 - current only works on port 80
-- wiki powered by gollum is not working yet
+- wiki powered by gollum is not working (in the new OpenML frontend this will no longer be used).
 
 # Requirements
 
