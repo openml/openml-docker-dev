@@ -38,7 +38,7 @@ Edit *docker-compose.yml* mainly define a secure **mysql password**:
 
 **(leaving the default will make docker-compose fail)**
 
-![](images/passwordsql.png)
+![](images/passwordsql.PNG)
 
 
 Copy *OpenML\openml_OS\config\BASE_CONFIG-BLANK.php* to *OpenML\openml_OS\config\BASE_CONFIG.php*
