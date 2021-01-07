@@ -1,6 +1,6 @@
 # OpenML Docker compose images/scripts for local development setup (Linux/Windows)
 
-# **For local dev environment setup only, Insecure & Not for Production Setup**
+## **For local dev environment setup only, Insecure & Not for Production Setup**
 
 
 # Issues/limitations
@@ -18,9 +18,10 @@ For Linux: docker commands assume you can use docker without sudo (your user is 
 # Instructions
 
 
-## Clone this repository & clone OpenML repo/branch inside 
+### Step 1: Clone the repos
 
-To use the latest version of OpenML repo clone merge_docker_dev branch in both repos.
+Note that we clone docker_changes branch of OpenML repo. 
+
 ```
 git clone https://github.com/openml/openml-docker-dev.git
 
@@ -28,10 +29,10 @@ cd openml-docker-dev
 
 git clone -b docker_changes https://github.com/openml/OpenML.git
 
-
+```
 ![](images/2018-04-07-00-57-29.png)
 
-## Fill in Docker-compose Configuration
+### Step 2: Configure docker and OpenML
 
 Edit *docker-compose.yml* mainly define a secure **mysql password**:
 
@@ -39,7 +40,6 @@ Edit *docker-compose.yml* mainly define a secure **mysql password**:
 
 ![](images/passwordsql.png)
 
-## Fill in OpenML Configuration file
 
 Copy *OpenML\openml_OS\config\BASE_CONFIG-BLANK.php* to *OpenML\openml_OS\config\BASE_CONFIG.php*
 
@@ -73,7 +73,7 @@ Disable email activation in *OpenML\openml_OS\ion_auth.php*
 
 ![](images/2018-04-07-01-07-21.png)
 
-## Build images & start service containers using docker-compose
+### Step 3: Starting docker-compose
 
 On the openml-docker-dev root folder, where *docker-compose.yml* is located run:
 
@@ -82,14 +82,14 @@ docker pull docker.elastic.co/elasticsearch/elasticsearch:6.8.2
 
 docker-compose up
 ```
-
-(images can take few minutes to build for the first time, after start wait a few seconds for services to be ready, ex: MySQL ready for connections)
+The elasticsearch pull is needed only for the very first time. Images can take few minutes to build for the first time, 
+after start wait a few seconds for services to be ready, ex: MySQL ready for connections)
 
 ![](images/2018-04-07-01-11-21.png)
 
 ![](images/2018-04-07-01-12-43.png)
 
-## Check phpmyadmin at http://localhost:8080/
+### Step 4 Check phpmyadmin at http://localhost:8080/
 
 ![](images/2018-04-07-01-13-38.png)
 
@@ -98,7 +98,7 @@ docker-compose up
 ![](images/2018-04-07-01-14-02.png)
 
 
-## Init dbs, admin user & elastic search indexes
+### Step 5: Init dbs, admin user & elastic search indexes
 
 Execute in a new window/shell: 
 
@@ -106,22 +106,24 @@ Execute in a new window/shell:
 docker exec -it openmldockerdev_website_1 php index.php cron init_local_env
 ```
 
-(take note the generated admin password, and wait to finish, can take 1-2mins)
+(take note the printed admin username and password, and wait to finish, can take 1-2mins)
 
 ![](images/localdb.png)
 
 
 
-## Change data folder owner to www-data apache user in container, allow for logs/uploads in data folder, resets log file permissions created in previous init step
+Change data folder owner to www-data apache user in container, allow for logs/uploads in data folder, resets log file permissions created in previous init step
 
 Execute in a new window/shell:
 ```
 docker exec -it openmldockerdev_website_1 chown -R www-data:www-data /var/www/html/data
 ```
 
-## Should be running now! Final tests:
 
-### Login on http://localhost with admin and saved password
+
+###  Step 6: Final tests
+
+Login on http://localhost with admin and saved password
 
 ![](images/admin.png)
 
