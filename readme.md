@@ -53,15 +53,15 @@ Define path and data path. In the docker compose, note that /var/www/html is map
 
 ![](images/2018-04-07-01-02-07.png)
 
-![](images/datapath.png)
+![](images/datapath.PNG)
 
 Configure details for the experiment database.
 
-![](images/pass1.png)
+![](images/pass1.PNG)
 
 Configure details for the OpenML database.
 
-![](images/pass2.png)
+![](images/pass2.PNG)
 
 Configure elastic search.
 
@@ -108,7 +108,7 @@ docker exec -it openmldockerdev_website_1 php index.php cron init_local_env
 
 (take note the printed admin username and password, and wait to finish, can take 1-2mins)
 
-![](images/localdb.png)
+![](images/localdb.PNG)
 
 
 
@@ -125,7 +125,7 @@ docker exec -it openmldockerdev_website_1 chown -R www-data:www-data /var/www/ht
 
 Login on http://localhost with admin and saved password
 
-![](images/admin.png)
+![](images/admin.PNG)
 
 ![](images/2018-04-07-01-18-32.png)
 
@@ -133,13 +133,13 @@ Login on http://localhost with admin and saved password
 
 ### Check dataset 
 We have 1 sample dataset
-![](images/ds1.png)
+![](images/ds1.PNG)
 
 ### Test upload dataset & wait for feature calculation. The status will change to active in a few minutes.
 ![](images/2018-04-07-01-18-59.png)
 
 ![](images/2018-04-07-01-19-05.png)
 
-![](images/upload2.png)
+![](images/upload2.PNG)
 
 ### Note: Files in OpenML cloned repo are mounted inside the website container, any change will reflect immediately on the site
