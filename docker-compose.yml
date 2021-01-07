@@ -14,12 +14,17 @@ version: '2'
 services:
   # MySQL dbs
   mysql:
-    build: ./mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: *******************
+   image: mysql:5.7.25
+   command: mysqld --default-authentication-plugin=mysql_native_password
+   build: ./mysql
+   environment:
+     MYSQL_ROOT_PASSWORD: ""
+     MYSQL_DATABASE: openml
+
   
   # Elastic search indexes
   elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.2
     build: ./elasticsearch
     command: elasticsearch
     ports:

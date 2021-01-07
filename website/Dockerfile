@@ -4,7 +4,7 @@ LABEL maintainer="Rui Quintino,https://github.com/rquintino"
 # Install PHP extensions and PECL modules.
 RUN buildDeps=" \
         libbz2-dev \
-        libmysqlclient-dev \
+        default-libmysqlclient-dev \
     " \
     runtimeDeps=" \
         curl \
@@ -13,7 +13,7 @@ RUN buildDeps=" \
         libicu-dev \
         libjpeg-dev \
         libmcrypt-dev \
-        libpng12-dev \
+        libpng-dev \
         libpq-dev \
     " \
     && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y $buildDeps $runtimeDeps \
