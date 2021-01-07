@@ -22,26 +22,12 @@ For Linux: docker commands assume you can use docker without sudo (your user is 
 
 To use the latest version of OpenML repo clone merge_docker_dev branch in both repos.
 ```
-git clone -b merge_dev_docker https://github.com/openml/openml-docker-dev.git
-
-cd openml-docker-dev
-
-git clone -b merge_dev_docker https://github.com/openml/OpenML.git
-
-
-
-```
-To use the older initial working version of OpenML and docker repos clone the repos using these branches:
-```
 git clone https://github.com/openml/openml-docker-dev.git
 
 cd openml-docker-dev
 
-git clone -b enable-docker-changes https://github.com/openml/OpenML.git
+git clone -b docker_changes https://github.com/openml/OpenML.git
 
-
-
-```
 
 ![](images/2018-04-07-00-57-29.png)
 
