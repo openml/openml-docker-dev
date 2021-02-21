@@ -69,7 +69,7 @@ Configure elastic search.
 
 ![](images/2018-04-07-01-04-02.png)
 
-Disable email activation in *OpenML\openml_OS\ion_auth.php*
+Disable email activation in *OpenML\openml_OS\config\ion_auth.php*
 
 ![](images/2018-04-07-01-07-21.png)
 
@@ -103,7 +103,7 @@ after start wait a few seconds for services to be ready, ex: MySQL ready for con
 Execute in a new window/shell: 
 
 ```
-docker exec -it openmldockerdev_website_1 php index.php cron init_local_env
+docker exec -it openml-docker-dev_website_1 php index.php cron init_local_env
 ```
 
 (take note the printed admin username and password, and wait to finish, can take 1-2mins)
@@ -116,7 +116,7 @@ Change data folder owner to www-data apache user in container, allow for logs/up
 
 Execute in a new window/shell:
 ```
-docker exec -it openmldockerdev_website_1 chown -R www-data:www-data /var/www/html/data
+docker exec -it openml-docker-dev_website_1 chown -R www-data:www-data /var/www/html/data
 ```
 
 
