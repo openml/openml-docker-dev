@@ -36,7 +36,7 @@ git clone -b docker_changes https://github.com/openml/OpenML.git
 ####  New website configuration (Optional)
 Skip this step unless you want to use the new website.
 
-- Clone the new website from here, as it has some code changes
+- Clone the new website from here (also inside openml-docker-dev), as it has some code changes
 ```
 git clone -b docker https://github.com/PortML/openml.org.git
 cd openml.org
