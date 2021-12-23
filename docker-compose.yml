@@ -23,7 +23,7 @@ services:
    command: mysqld --default-authentication-plugin=mysql_native_password
    build: ./mysql
    environment:
-     MYSQL_ROOT_PASSWORD: "1993sahi11"
+     MYSQL_ROOT_PASSWORD: ""
      MYSQL_DATABASE: openml
 
 
