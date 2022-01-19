@@ -40,15 +40,31 @@ Skip this step unless you want to use the new website.
 ```
 git clone -b docker https://github.com/PortML/openml.org.git
 cd openml.org
+cp server/src/client/app/TEMPLATE.env .env
 
 ```
 - Edit DATABASE_URI field in *.flaskenv* to add in the mysql password in place of PASSWORD-
   (use the same password as the mysql password in docker-compose.yml)
-- Continue with remaining steps and view Step 7 for testing
-new website changes
+- Note on DATABASE-URI: It seems like mysql-test works for MAC OS and localhost:3306 for windows. 
+- Check openml.org/server/src/client/app/.env if the react url is correct
+- Please make sure you rebuild the openml.org docker image if you make any changes to these configuration files using: 
+- This will  make sure the react image is re-built:
+```
+cd openml.org
+docker build -t openml-docker -f Dockerfile .
+```
+- Continue with remaining steps and view Step 7 for testing new website changes
+- Switch back to root folder
 
+```
+cd ..
 
-
+```
+If the new website rebuild doesn't work, try clearing all caches with:
+```
+docker system prune -a
+```
+and then, pull elastic search before doing docker-compose up.
 ### Step 2: Configure docker and OpenML
 
 Edit *docker-compose.yml* mainly define a secure **mysql password**:
