@@ -33,7 +33,38 @@ git clone -b docker_changes https://github.com/openml/OpenML.git
 
 ```
 ![](images/2018-04-07-00-57-29.png)
+####  New website configuration (Optional)
+Skip this step unless you want to use the new website.
 
+- Clone the new website from here (also inside openml-docker-dev), as it has some code changes
+```
+git clone -b docker https://github.com/PortML/openml.org.git
+cd openml.org
+cp server/src/client/app/TEMPLATE.env .env
+
+```
+- Edit DATABASE_URI field in *.flaskenv* to add in the mysql password in place of PASSWORD-
+  (use the same password as the mysql password in docker-compose.yml)
+- Note on DATABASE-URI: It seems like mysql-test works for MAC OS and localhost:3306 for windows. 
+- Check openml.org/server/src/client/app/.env if the react url is correct
+- Please make sure you rebuild the openml.org docker image if you make any changes to these configuration files using: 
+- This will  make sure the react image is re-built:
+```
+cd openml.org
+docker build -t openml-docker -f Dockerfile .
+```
+- Continue with remaining steps and view Step 7 for testing new website changes
+- Switch back to root folder
+
+```
+cd ..
+
+```
+If the new website rebuild doesn't work, try clearing all caches with:
+```
+docker system prune -a
+```
+and then, pull elastic search before doing docker-compose up.
 ### Step 2: Configure docker and OpenML
 
 Edit *docker-compose.yml* mainly define a secure **mysql password**:
@@ -74,6 +105,9 @@ Configure elastic search.
 Disable email activation in *OpenML\openml_OS\config\ion_auth.php*
 
 ![](images/2018-04-07-01-07-21.png)
+
+
+
 
 ### Step 3: Starting docker-compose
 
@@ -145,3 +179,10 @@ We have 1 sample dataset
 ![](images/upload2.PNG)
 
 ### Note: Files in OpenML cloned repo are mounted inside the website container, any change will reflect immediately on the site
+
+### Step 7 New website checks (Optional)
+- Check the new website running at 127.0.0.1/5000. It should look similar to new.openml.org
+- Sign up as a new user in the new website. (Note that you cannot use the admin account from the old website to login here)
+- Sign in with your email and password
+- You should be able to see your profile
+- Dataset upload is not working yet (some connection issue in docker compose - in progress)

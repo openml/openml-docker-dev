@@ -15,13 +15,31 @@ services:
   # MySQL dbs
   mysql:
    image: mysql:5.7.25
+   container_name: mysql_test
+   platform: linux/x86_64
+   ports:
+     # <Port exposed> : < MySQL Port running inside container>
+     - '3307:3306'
    command: mysqld --default-authentication-plugin=mysql_native_password
    build: ./mysql
    environment:
      MYSQL_ROOT_PASSWORD: ""
      MYSQL_DATABASE: openml
 
-  
+
+
+  website_new:
+    build: openml.org
+    ports:
+      - "5000:5000"
+    links:
+      - mysql
+
+    depends_on:
+      - mysql
+      - elasticsearch
+
+
   # Elastic search indexes
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.8.2
@@ -31,23 +49,22 @@ services:
       - "9200:9200"
       - "9300:9300"
 
-  # Php frontend
+#   Php frontend
   website:
     build: ./website
     ports:
       - 80:80
-    volumes: 
+    volumes:
       - ./config:/openmlconfig
       - ./OpenML:/var/www/html
     depends_on:
       - mysql
       - elasticsearch
-      - gollum
-  
+
   # MySQL admin UI (tool)
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    volumes: 
+    volumes:
       - ./config:/openmlconfig
     ports:
       - 8080:80
@@ -59,15 +76,9 @@ services:
   # OpenML Java background workers
   java:
     image: java
-    volumes: 
+    volumes:
       - ./config:/openmlconfig
       - ./OpenML:/var/www/html
-    
+
     # runs openml process_dataset java background task each 10 secs
     command: /bin/bash -c 'while sleep 10;do api_key=`cat /openmlconfig/api_key.txt`; echo "API key:$$api_key";  java -Xmx4G -jar /var/www/html/openml_OS/third_party/OpenML/Java/evaluate.jar -config "server = http://website/;api_key = $$api_key" -f process_dataset;done'
-
-  # OpenML Wiki, TODO: not working , CORS/cross domain issue
-  gollum:
-    build: ./gollum
-    ports:
-      - 9080:80
