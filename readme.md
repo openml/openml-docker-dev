@@ -6,7 +6,6 @@
 # Issues/limitations
 - current only works on port 80
 - wiki powered by gollum is not working (in the new OpenML frontend this will no longer be used).
-- **Only the local admin account works for now.** There is an issue with login and it will not be possible to create and login with other accounts (Work in progress)
 
 
 # Requirements
