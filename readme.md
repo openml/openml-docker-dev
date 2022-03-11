@@ -43,28 +43,7 @@ cd openml.org
 cp server/src/client/app/TEMPLATE.env .env
 
 ```
-- Edit DATABASE_URI field in *.flaskenv* to add in the mysql password in place of PASSWORD-
-  (use the same password as the mysql password in docker-compose.yml)
-- Note on DATABASE-URI: It seems like mysql-test works for MAC OS and localhost:3306 for windows. 
-- Check openml.org/server/src/client/app/.env if the react url is correct
-- Please make sure you rebuild the openml.org docker image if you make any changes to these configuration files using: 
-- This will  make sure the react image is re-built:
-```
-cd openml.org
-docker build -t openml-docker -f Dockerfile .
-```
-- Continue with remaining steps and view Step 7 for testing new website changes
-- Switch back to root folder
 
-```
-cd ..
-
-```
-If the new website rebuild doesn't work, try clearing all caches with:
-```
-docker system prune -a
-```
-and then, pull elastic search before doing docker-compose up.
 ### Step 2: Configure docker and OpenML
 
 Edit *docker-compose.yml* mainly define a secure **mysql password**:
@@ -106,7 +85,47 @@ Disable email activation in *OpenML\openml_OS\ion_auth.php*
 
 ![](images/2018-04-07-01-07-21.png)
 
+#### New website configuration
+- Edit DATABASE_URI field in *.flaskenv* to add in the mysql password in place of PASSWORD-
+  (use the same password as the mysql password in docker-compose.yml)
+- Note on DATABASE_URI: hostname should be 'mysql_test', the container name of database:
+  ``DATABASE_URI=mysql+pymysql://[username]:[password]@mysql_test:3306/openml``
+- Check openml.org/server/src/client/app/.env if the react url is correct
+- In order to enable the python debug prints in docker add the following lines of code to the main 'docker-compose.yml' file inside the 'website_new' service
+````
+environment:
+      - PYTHONUNBUFFERED=1
+````
+- Please make sure you rebuild the openml.org docker image if you make any changes to these configuration files using: 
+  This will  make sure the react image is re-built: 
+```
+cd openml.org
+docker build -t openml-docker -f Dockerfile .
+```
+- [Optionally] you can use a hot-reload configuration for the new website with some constrains, see the section below how to set this up
 
+- Continue with remaining steps and view Step 7 for testing new website changes
+- Switch back to root folder
+
+
+```
+cd ..
+
+```
+If the new website rebuild doesn't work, try clearing all caches with:
+```
+docker system prune -a
+```
+and then, pull elastic search before doing docker-compose up.
+
+### [Optional hot-reload new website]
+Using a hot-reload in docker requires you to set the volume of the source code to your local folder of the new website. Flask runs in development mode and will see changes you make without requireing you to rebuild the image. The only downside is that you are unable to reach the new front-end (React code) via the docker URL. You can seperatly run a node development server for the front-end to also enable hot-reload for the React front-end.
+
+Add the following lines of code to the main 'docker-compose.yml' file inside the 'website_new' service to enable this hot-reload function:
+````
+volumes:
+      - ./openml.org:/app
+````
 
 
 ### Step 3: Starting docker-compose
@@ -139,7 +158,7 @@ after start wait a few seconds for services to be ready, ex: MySQL ready for con
 Execute in a new window/shell: 
 
 ```
-docker exec -it openmldockerdev_website_1 php index.php cron init_local_env
+docker exec -it openml-docker-dev_website_1 php index.php cron init_local_env
 ```
 
 (take note the printed admin username and password, and wait to finish, can take 1-2mins)
@@ -152,12 +171,12 @@ Change data folder owner to www-data apache user in container, allow for logs/up
 
 Execute in a new window/shell:
 ```
-docker exec -it openmldockerdev_website_1 chown -R www-data:www-data /var/www/html/data
+docker exec -it openml-docker-dev_website_1 chown -R www-data:www-data /var/www/html/data
 ```
 
 
 
-###  Step 6: Final tests
+###  Step 6: Final tests (Old website)
 
 Login on http://localhost with admin and saved password
 
@@ -185,4 +204,5 @@ We have 1 sample dataset
 - Sign up as a new user in the new website. (Note that you cannot use the admin account from the old website to login here)
 - Sign in with your email and password
 - You should be able to see your profile
-- Dataset upload is not working yet (some connection issue in docker compose - in progress)
+- By default the user created above is not an admin. This is required if you want to use the dataset upload. This can be done by loggin into MyPHPAdmin and changing the 'users_groups' row of this user. Set the 'group_id' to 1 (admin group) and save.
+- Check Dataset upload (required to fill in all fields)
