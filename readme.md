@@ -96,7 +96,7 @@ environment:
       - PYTHONUNBUFFERED=1
 ````
 - Please make sure you rebuild the openml.org docker image if you make any changes to these configuration files using: 
-  This will  make sure the react image is re-built: 
+  This will  make sure the react image is re-built (Don't do this before the first docker-compose up): 
 ```
 cd openml.org
 docker build -t openml-docker -f Dockerfile .
