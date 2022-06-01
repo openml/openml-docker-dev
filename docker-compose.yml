@@ -59,6 +59,12 @@ services:
     depends_on:
       - mysql
       - elasticsearch
+    environment:
+      DB_HOST_OPENML: "mysql"
+      DB_HOST_EXPDB: "mysql"
+      ES_URL: 'localhost:9200'
+      ES_PUBLIC_URL: 'elasticsearch:9200'
+      BASE_URL: 'http://localhost/'
 
   # MySQL admin UI (tool)
   phpmyadmin:
