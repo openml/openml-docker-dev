@@ -20,7 +20,6 @@ services:
    ports:
      # <Port exposed> : < MySQL Port running inside container>
      - '3307:3306'
-   command: mysqld --default-authentication-plugin=mysql_native_password
    build: ./mysql
    environment:
      MYSQL_ROOT_PASSWORD: ""
