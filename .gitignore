@@ -1,1 +1,9 @@
 config/
+
+OpenML/
+
+openml.org/
+
+storage/datastore/*
+storage/es/*
+storage/mysql/*

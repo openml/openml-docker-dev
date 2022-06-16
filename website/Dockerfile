@@ -3,18 +3,18 @@ LABEL maintainer="Rui Quintino,https://github.com/rquintino"
 
 # Install PHP extensions and PECL modules.
 RUN buildDeps=" \
-        libbz2-dev \
-        default-libmysqlclient-dev \
+    libbz2-dev \
+    default-libmysqlclient-dev \
     " \
     runtimeDeps=" \
-        curl \
-        git \
-        libfreetype6-dev \
-        libicu-dev \
-        libjpeg-dev \
-        libmcrypt-dev \
-        libpng-dev \
-        libpq-dev \
+    curl \
+    git \
+    libfreetype6-dev \
+    libicu-dev \
+    libjpeg-dev \
+    libmcrypt-dev \
+    libpng-dev \
+    libpq-dev \
     " \
     && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y $buildDeps $runtimeDeps \
     && docker-php-ext-install bz2 calendar iconv intl mbstring mcrypt mysqli pdo_mysql pdo_pgsql pgsql zip \
@@ -37,3 +37,13 @@ RUN service apache2 restart
 RUN ln -sf /dev/stdout /var/log/apache2/access.log
 
 RUN ln -sf /dev/stderr /var/log/apache2/error.log
+
+RUN mkdir -p /var/www/html
+COPY ./OpenML /var/www/html
+
+## Disable coping config folder as this will be used by AWS EFS
+# RUN mkdir -p /openmlconfig
+# COPY ./api_key.txt /openmlconfig/api_key.txt
+
+# COPY ./entrypoint.sh /entrypoint.sh
+# ENTRYPOINT ["/entrypoint.sh"]
