@@ -21,6 +21,7 @@ services:
       # <Port exposed> : < MySQL Port running inside container>
       - '3307:3306'
     build:
+      #Specify the build file
       context: ./mysql
       dockerfile: DockerfileAws
     environment:
@@ -28,3 +29,17 @@ services:
       MYSQL_DATABASE: openml
     volumes:
       - ./storage/mysql:/storage
+
+  website_new:
+    build:
+      context: ./openml.org
+      dockerfile: DockerfileAws
+    ports:
+      - "5000:5000"
+    links:
+      - mysql
+    depends_on:
+      - mysql
+      - elasticsearch
+    environment:
+      - PYTHONUNBUFFERED=1

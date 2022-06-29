@@ -8,6 +8,8 @@ ADD ./openml.sql /docker-entrypoint-initdb.d
 COPY ./custom-mysql.cnf /etc/mysql/conf.d/
 COPY ./portml-mysql.cnf /etc/mysql/my.cnf
 
+# RUN chown -R mysql:mysql /storage
+
 # RUN mkdir -p /storage
 # RUN chmod -R 777 /storage
 # RUN groupadd -r -g 6000 mysqlgroup

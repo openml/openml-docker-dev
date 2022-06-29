@@ -89,7 +89,8 @@ Disable email activation in *OpenML/openml_OS/config/ion_auth.php*
   (use the same password as the mysql password in docker-compose.yml)
 - Note on DATABASE_URI: hostname should be 'mysql_test', the container name of database:
   ``DATABASE_URI=mysql+pymysql://[username]:[password]@mysql_test:3306/openml``
-- Check openml.org/server/src/client/app/.env if the react url is correct
+- Check openml.org/server/src/client/app/.env if the react url is correct This environmental file for React has now been reloacated to the main folder of openml.org
+  - Copy ``TEMPLATE.reactenv`` and rename it ``.reactenv`` for local (docker instructions) or ``.reactenv_aws`` for AWS deployment. Configure the required URLs in the ENV file according to the deployment
 - In order to enable the python debug prints in docker add the following lines of code to the main 'docker-compose.yml' file inside the 'website_new' service
 ````
 environment:
@@ -142,6 +143,14 @@ after start wait a few seconds for services to be ready, ex: MySQL ready for con
 ![](images/2018-04-07-01-11-21.png)
 
 ![](images/2018-04-07-01-12-43.png)
+
+#### Development restarts
+During development the Docker image needs to be recreated multiple times. The following commands ensure that old images are removed and a new image is recreated:
+```
+docker-compose rm -f
+docker-compose pull
+docker-compose up --build
+```
 
 ### Step 4 Check phpmyadmin at http://localhost:8080/
 
@@ -205,3 +214,10 @@ We have 1 sample dataset
 - You should be able to see your profile
 - By default the user created above is not an admin. This is required if you want to use the dataset upload. This can be done by loggin into MyPHPAdmin and changing the 'users_groups' row of this user. Set the 'group_id' to 1 (admin group) and save.
 - Check Dataset upload (required to fill in all fields)
+
+### Step 8 Building images for remote deployment
+The PortML version of the docker image also includes configurations for remote deployment (AWS) backend images (Flask and PHP) can use environment variables which can be set in the docker-compose.yml file and in the remote hosting environment. However, frontend (React) and database (MySQL) configurations need pre-build images specifically for the deployment. For this case a second compose file is created that targets these changes. In order to create image for AWS run the following command:
+```
+docker-compose -f docker-compose.yml -f docker-compose-aws.yml up -d
+```
+
