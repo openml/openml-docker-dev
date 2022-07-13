@@ -166,7 +166,7 @@ docker-compose up --build
 Execute in a new window/shell: 
 
 ```
-docker exec -it openml-docker-dev-website-1 php index.php cron init_local_env
+docker exec -it openml-docker-dev_website_1 php index.php cron init_local_env
 ```
 
 (take note the printed admin username and password, and wait to finish, can take 1-2mins)
@@ -179,7 +179,7 @@ Change data folder owner to www-data apache user in container, allow for logs/up
 
 Execute in a new window/shell:
 ```
-docker exec -it openml-docker-dev-website-1 chown -R www-data:www-data /var/www/html/data
+docker exec -it openml-docker-dev_website_1 chown -R www-data:www-data /var/www/html/data
 ```
 
 
@@ -218,6 +218,12 @@ We have 1 sample dataset
 ### Step 8 Building images for remote deployment
 The PortML version of the docker image also includes configurations for remote deployment (AWS) backend images (Flask and PHP) can use environment variables which can be set in the docker-compose.yml file and in the remote hosting environment. However, frontend (React) and database (MySQL) configurations need pre-build images specifically for the deployment. For this case a second compose file is created that targets these changes. In order to create image for AWS run the following command:
 ```
-docker-compose -f docker-compose.yml -f docker-compose-aws.yml up -d
+docker-compose -f docker-compose.yml -f docker-compose-aws.yml up -d --build
+```
+
+If small changes do not trigger an update when pushing to AWS use the following command(s) to build from scratch:
+
+```
+docker-compose rm -f ; docker-compose pull ; docker-compose -f docker-compose.yml -f docker-compose-aws.yml up -d --build
 ```
 

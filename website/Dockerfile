@@ -39,7 +39,7 @@ RUN ln -sf /dev/stdout /var/log/apache2/access.log
 RUN ln -sf /dev/stderr /var/log/apache2/error.log
 
 RUN mkdir -p /var/www/html
-COPY ./OpenML /var/www/html
+COPY ./OpenML2 /var/www/html
 
 ## Disable coping config folder as this will be used by AWS EFS
 # RUN mkdir -p /openmlconfig

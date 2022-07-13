@@ -24,8 +24,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "test123"
       MYSQL_DATABASE: openml
-    volumes:
-      - ./storage/mysql:/storage
+    # volumes:
+    #   - ./storage/mysql:/storage
 
   website_new:
     build: openml.org
@@ -52,7 +52,9 @@ services:
 
   #   Php frontend
   website:
-    build: ./website
+    build:
+      context: ./
+      dockerfile: ./website/Dockerfile
     ports:
       - 80:80
     volumes:
@@ -63,12 +65,21 @@ services:
       - mysql
       - elasticsearch
     environment:
+      DB_NAME_OPENML: 'openml'
       DB_HOST_OPENML: "mysql_test"
+      DB_USER_OPENML: 'root'
+      DB_PASS_OPENML: 'test123'
+      DB_NAME_EXPDB: 'openml_expdb'
       DB_HOST_EXPDB: "mysql_test"
+      DB_USER_EXPDB_READ: 'root'
+      DB_PASS_EXPDB_READ: 'test123'
+      DB_USER_EXPDB_WRITE: 'root'
+      DB_PASS_EXPDB_WRITE: 'test123'
       ES_URL: 'elasticsearch:9200'
       ES_PUBLIC_URL: 'localhost:9200'
       BASE_URL: 'http://localhost/'
       DATA_PATH: '/datastore/'
+      DIRECTORY_PATH: '/var/www/html/'
 
   # MySQL admin UI (tool)
   phpmyadmin:
