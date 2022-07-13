@@ -28,7 +28,11 @@ services:
     #   - ./storage/mysql:/storage
 
   website_new:
-    build: openml.org
+    build:
+      context: ./
+      dockerfile: ./website-new/Dockerfile
+      args:
+        - sourceDirectory=portml-website
     ports:
       - "5000:5000"
     links:

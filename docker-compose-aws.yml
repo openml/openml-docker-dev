@@ -32,8 +32,8 @@ services:
 
   website_new:
     build:
-      context: ./openml.org
-      dockerfile: DockerfileAws
+      context: ./
+      dockerfile: ./website-new/DockerfileAws
     ports:
       - "5000:5000"
     links:
