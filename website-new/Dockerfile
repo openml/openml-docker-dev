@@ -29,8 +29,8 @@ RUN npm install --legacy-peer-deps
 RUN npm run build --prefix server/src/client/app/
 CMD ["flask", "run", "--host", "0.0.0.0"]
 
-RUN mkdir -p /openmlconfig
-COPY ./${sourceDirectory}/api_key.txt /openmlconfig/api_key.txt
+# RUN mkdir -p /openmlconfig
+# COPY ./${sourceDirectory}/api_key.txt /openmlconfig/api_key.txt
 
 #   "--host", "0.0.0.0"
 
