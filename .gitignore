@@ -1,12 +1,18 @@
 config/
 
+openmlsource/*
+
 OpenML/
 OpenML2/
 
 openml.org/
 portml-website/
+portml-platform/
 
 storage/datastore/*
 storage/es/*
 storage/mysql/*
 portml-website
+
+docker-compose.yml
+docker-compose-aws.yml

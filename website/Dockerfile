@@ -1,6 +1,9 @@
 FROM php:7.0-apache
 LABEL maintainer="Rui Quintino,https://github.com/rquintino"
 
+# Set argument to make source directory variable
+ARG sourceDirectory=OpenML
+
 # Install PHP extensions and PECL modules.
 RUN buildDeps=" \
     libbz2-dev \
@@ -39,7 +42,7 @@ RUN ln -sf /dev/stdout /var/log/apache2/access.log
 RUN ln -sf /dev/stderr /var/log/apache2/error.log
 
 RUN mkdir -p /var/www/html
-COPY ./OpenML2 /var/www/html
+COPY ./${sourceDirectory} /var/www/html
 
 ## Disable coping config folder as this will be used by AWS EFS
 # RUN mkdir -p /openmlconfig

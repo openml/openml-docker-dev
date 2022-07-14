@@ -24,15 +24,15 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "test123"
       MYSQL_DATABASE: openml
-    # volumes:
-    #   - ./storage/mysql:/storage
+    volumes:
+      - ./storage/mysql:/storage
 
   website_new:
     build:
       context: ./
       dockerfile: ./website-new/Dockerfile
       args:
-        - sourceDirectory=portml-website
+        - sourceDirectory=openml.org
     ports:
       - "5000:5000"
     links:
@@ -59,6 +59,8 @@ services:
     build:
       context: ./
       dockerfile: ./website/Dockerfile
+      args:
+        - sourceDirectory=OpenML2
     ports:
       - 80:80
     volumes:
