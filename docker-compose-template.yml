@@ -61,7 +61,7 @@ services:
       context: ./
       dockerfile: ./website/Dockerfile
       args:
-        - sourceDirectory=OpenML2
+        - sourceDirectory=OpenML
     ports:
       - 80:80
     volumes:
