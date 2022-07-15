@@ -1,6 +1,8 @@
-config/
+config/*
+!config/api_key.txt
 
 openmlsource/*
+!openmlsource/readme.md
 
 OpenML/
 OpenML2/

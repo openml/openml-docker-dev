@@ -75,7 +75,7 @@ Most backend configurations can be set in the ``docker-compose.yml`` file. Front
     ![](images/compose-mysql-config.PNG)
 
 
-3. Copy ``[PHP directory]\openml_OS\config\BASE_CONFIG-BLANK.php`` to ``[PHP directory]\openml_OS\config\BASE_CONFIG.php``
+3. Copy ``[PHP directory]\openml_OS\config\BASE_CONFIG-BLANK-ENV.php`` to ``[PHP directory]\openml_OS\config\BASE_CONFIG.php``
 
 4. Edit the ``website`` environment variables in ``docker-compose.yml``:
 
@@ -131,6 +131,8 @@ cd ..
 ``` -->
 
 ### Step 4: Starting docker-compose
+
+Make sure docker is running.
 
 On the Docker folder, where ``docker-compose.yml`` is located run:
 
@@ -249,6 +251,13 @@ If the new website rebuild doesn't work, try clearing all caches with:
 docker system prune -a
 ```
 and then, pull elastic search before doing docker-compose up.
+
+
+### Java error
+On windows by default the entry scripts use the Windows line ending (CRLF) this cannot be committed using git, but needs to be changed to ``LF``. 
+
+### Cannot login with PhpMyadmin
+Stop all containers. Try to delete the content of the ``mysql`` and ``es`` folder in the ``storage`` directory. And restart everything cleanly (with removing the previous images)
 
 ## ToDos
 - Include Flask environmental variables in the docker-compose file

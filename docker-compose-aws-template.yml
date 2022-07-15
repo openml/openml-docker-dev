@@ -1,0 +1,45 @@
+# OpenML dev docker-compose
+# For local dev environment setup
+# *Insecure & Not for Production Setup*
+
+# Notes:
+# issues: Rui Quintino,https://github.com/rquintino
+# config folder is used to share some config keys after init between containers
+# $ needs escaping to $$ in docker_compose file, $api_key is then $$api_key
+# TODO: gollum not working, CORS issue, needs apache mapping, local gollum install on website container?
+# OpenML main repo is mapped as volume, not copied within the built images, for enable development
+
+version: '2'
+
+services:
+  # MySQL dbs
+  mysql:
+    image: mysql:5.7.25
+    container_name: mysql_test
+    platform: linux/x86_64
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3307:3306'
+    build:
+      #Specify the build file
+      context: ./mysql
+      dockerfile: DockerfileAws
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: openml
+    volumes:
+      - ./storage/mysql:/storage
+
+  website_new:
+    build:
+      context: ./
+      dockerfile: ./website-new/DockerfileAws
+    ports:
+      - "5000:5000"
+    links:
+      - mysql
+    depends_on:
+      - mysql
+      - elasticsearch
+    environment:
+      - PYTHONUNBUFFERED=1
