@@ -50,6 +50,7 @@ services:
       - SERVER_URL=http://website_new:5000/
       - REDIRECT_URL=http://website_new:5000
       - BACKEND_SERVER=http://website/api/v1/xml/
+      - BACKEND_BASE_URL=http://website/
       - SEND_EMAIL=False
 
   # Elastic search indexes
