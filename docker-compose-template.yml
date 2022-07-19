@@ -43,6 +43,14 @@ services:
       - elasticsearch
     environment:
       - PYTHONUNBUFFERED=1
+      - DATABASE_URI=mysql+pymysql://root:[fil-in PASSWORD]@[fill-in MYSQL_CONTAINER_NAME]:3306/[fill-in DATABASE_NAME]
+      - ELASTICSEARCH_SERVER=[ES_URL]
+      - APP_SECRET_KEY=abcd
+      - JWT_SECRET_KEY=abcd
+      - SERVER_URL=http://website_new:5000/
+      - REDIRECT_URL=http://website_new:5000
+      - BACKEND_SERVER=http://website/api/v1/xml/
+      - SEND_EMAIL=False
 
   # Elastic search indexes
   elasticsearch:

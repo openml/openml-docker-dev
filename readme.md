@@ -100,8 +100,17 @@ Most backend configurations can be set in the ``docker-compose.yml`` file. Front
 7. Flask configurations
     1. Copy and rename ``.flaskenv_TEMPLATE`` to ``.flaskenv`` in the ``[Flask website directory]``
     2. Copy and rename ``TEMPLATE.reactenv`` to ``.reactenv`` in the ``[Flask website directory]``  or rename to ``.reactenv_aws`` for AWS deployment.
-    3. Edit DATABASE_URI field in *.flaskenv* to add in the mysql password in place of PASSWORD-
+    3. Edit DATABASE_URI field in ``.flaskenv`` to add in the mysql password in place of PASSWORD-
   (use the same password as the mysql password in docker-compose.yml)
+    4. Fill in the following environmental variables in the ``docker compose.yml`` file under the ``website_new`` service. These variables will overwrite the variables in ``.flaskenv`` but this is kept in place for backwards compatibility:
+        1. DATABASE_URI=mysql+pymysql://root:[fil-in PASSWORD]@[fill-in MYSQL_CONTAINER_NAME]:3306/[fill-in DATABASE_NAME]
+            - Fill in the PASSWORD, MYSQL_CONTAINER_NAME (``mysql_test``), and DATABASE_NAME (``openml``)
+        2. ELASTICSEARCH_SERVER=[ES_URL] , default is ``http://elasticsearch:9200/``
+        3. APP_SECRET_KEY and JWT_SECRET_KEY
+        4. SERVER_URL, fill in container name of new website and the port (``http://website_new:5000/``)
+        5. REDIRECT_URL, to new website (``http://website_new:5000``)
+        6. BACKEND_SERVER, link to PHP backend server to set Python API server (``http://website/api/v1/xml/``)
+        7. SEND_EMAIL, used for disabling sending emails in development (currently set to ``False`` as configuration is not yet tested with sending emails using the Docker setup)
     4. Note on DATABASE_URI: hostname should be 'mysql_test' (by default), the container name of database:
   ``DATABASE_URI=mysql+pymysql://[username]:[password]@mysql_test:3306/openml``
     5. Update the variables in the ``.reactenv`` file according to the deployment. The template file already is configured to work with localhost and the ports the containers are accessible to (80: PHP; 5000; Flask; 9200: ES)
@@ -235,6 +244,8 @@ If small changes do not trigger an update when pushing to AWS use the following 
 ```
 docker-compose rm -f ; docker-compose pull ; docker-compose -f docker-compose.yml -f docker-compose-aws.yml up -d --build
 ```
+
+All environment settings in the docker files are not used when running the images on AWS, all environment variables therefore need to be set in the AWS task definition per container configuration
 
 ### [Optional hot-reload new website]
 Using a hot-reload in docker requires you to set the volume of the source code to your local folder of the new website. Flask runs in development mode and will see changes you make without requireing you to rebuild the image. The only downside is that you are unable to reach the new front-end (React code) via the docker URL. You can seperatly run a node development server for the front-end to also enable hot-reload for the React front-end.
