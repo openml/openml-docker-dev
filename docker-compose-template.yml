@@ -52,6 +52,8 @@ services:
       - BACKEND_SERVER=http://website/api/v1/xml/
       - BACKEND_BASE_URL=http://website/
       - SEND_EMAIL=False
+      - DASHBOARD_USE_DOCKER_CONTAINER_NAME=FALSE
+      - DASHBOARD_PHP_CONTAINER_NAME=website
 
   # Elastic search indexes
   elasticsearch:

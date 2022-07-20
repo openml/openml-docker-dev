@@ -111,6 +111,8 @@ Most backend configurations can be set in the ``docker-compose.yml`` file. Front
         5. REDIRECT_URL, to new website (``http://website_new:5000``)
         6. BACKEND_SERVER, link to PHP backend server to set Python API server (``http://website/api/v1/xml/``)
         7. SEND_EMAIL, used for disabling sending emails in development (currently set to ``False`` as configuration is not yet tested with sending emails using the Docker setup)
+        8. DASHBOARD_USE_DOCKER_CONTAINER_NAME, when using Docker downloading datasets from the dashboard code is not working as the container name should be used. Set this to true to use the DASHBOARD_PHP_CONTAINER_NAME
+        9. DASHBOARD_PHP_CONTINER_NAME, name of the older backend container used for dashboard code when running Docker
     4. Note on DATABASE_URI: hostname should be 'mysql_test' (by default), the container name of database:
   ``DATABASE_URI=mysql+pymysql://[username]:[password]@mysql_test:3306/openml``
     5. Update the variables in the ``.reactenv`` file according to the deployment. The template file already is configured to work with localhost and the ports the containers are accessible to (80: PHP; 5000; Flask; 9200: ES)
