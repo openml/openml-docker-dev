@@ -40,6 +40,12 @@ Instead of the default ``docker compose`` up command use the following chained c
 docker-compose rm -f ; docker-compose pull ; docker-compose -f docker-compose.yml -f docker-compose-aws.yml up --build
 ```
 
+## Running config commands
+
+```
+aws ecs execute-command --region [AWS_REGION] --cluster fargate-cluster --task [TASKID] --container website --command "php index.php cron init_local_env" --interactive
+```
+
 
 ## Additional info
 Extra information regarding AWS previously posted into Slack
