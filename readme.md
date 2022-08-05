@@ -273,4 +273,5 @@ On windows by default the entry scripts use the Windows line ending (CRLF) this 
 Stop all containers. Try to delete the content of the ``mysql`` and ``es`` folder in the ``storage`` directory. And restart everything cleanly (with removing the previous images)
 
 ## ToDos
-- Include Flask environmental variables in the docker-compose file
+- [DONE] Include Flask environmental variables in the docker-compose file
+- Improve DockerFile for website-new to copy flask and react part separately to take advantage of the caching of Docker

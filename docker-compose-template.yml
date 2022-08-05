@@ -44,16 +44,19 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
       - DATABASE_URI=mysql+pymysql://root:[fil-in PASSWORD]@[fill-in MYSQL_CONTAINER_NAME]:3306/[fill-in DATABASE_NAME]
-      - ELASTICSEARCH_SERVER=[ES_URL]
+      - ELASTICSEARCH_SERVER=[ES_URL_SECURED]
+      - ELASTICSEARCH_CONTAINER_URL=[ES_URL]
       - APP_SECRET_KEY=abcd
       - JWT_SECRET_KEY=abcd
       - SERVER_URL=http://website_new:5000/
       - REDIRECT_URL=http://website_new:5000
       - BACKEND_SERVER=http://website/api/v1/xml/
       - BACKEND_BASE_URL=http://website/
+      - BACKEND_CONTAINER_URL=http://website/
       - SEND_EMAIL=False
       - DASHBOARD_USE_DOCKER_CONTAINER_NAME=FALSE
       - DASHBOARD_PHP_CONTAINER_NAME=website
+      - AUTH_URL_PREFIX=/secure
 
   # Elastic search indexes
   elasticsearch:
