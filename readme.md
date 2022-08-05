@@ -95,8 +95,6 @@ Most backend configurations can be set in the ``docker-compose.yml`` file. Front
 
 6.  Disable email activation in ``[PHP directory]OpenML/openml_OS/config/ion_auth.php``
 
-    ![](images/2018-04-07-01-07-21.png)
-
 7. Flask configurations
     1. Copy and rename ``.flaskenv_TEMPLATE`` to ``.flaskenv`` in the ``[Flask website directory]``
     2. Copy and rename ``TEMPLATE.reactenv`` to ``.reactenv`` in the ``[Flask website directory]``  or rename to ``.reactenv_aws`` for AWS deployment.
