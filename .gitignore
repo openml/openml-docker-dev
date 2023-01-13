@@ -15,6 +15,7 @@ portml-platform/
 storage/datastore/*
 storage/es/*
 storage/mysql/*
+storage/minio/*
 portml-website
 
 docker-compose.yml

@@ -57,6 +57,8 @@ services:
       - DASHBOARD_USE_DOCKER_CONTAINER_NAME=FALSE
       - DASHBOARD_PHP_CONTAINER_NAME=website
       - AUTH_URL_PREFIX=/secure
+      - REQUIRE_CONFIRMED_REGISTERING=False
+      - EXTERNAL_WEBISTE_URL=http://localhost:5000/
 
   # Elastic search indexes
   elasticsearch:
@@ -118,8 +120,20 @@ services:
   # OpenML Java background workers
   java:
     build: ./java
-    image: java
+    image: amazoncorretto
     volumes:
       - ./config:/openmlconfig
       - ./openmlsource/:/openmlsource
     entrypoint: /entrypoint.sh
+
+  minio:
+    build: ./minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./storage/minio:/data
+    environment:
+      MINIO_ROOT_USER: FILL-IN
+      MINIO_ROOT_PASSWORD: FILL-IN
+    command: server --console-address ":9001" /data

@@ -9,3 +9,6 @@ ElasticSearch data folder
 
 mysql:
 MySQL data folder
+
+minio:
+MinIO data folder

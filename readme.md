@@ -27,7 +27,7 @@ First the Docker repo with the general structure and database files is cloned. O
 Clone and change into the Docker directory with the following commands
 
 ```
-git clone https://github.com/openml/openml-docker-dev.git [Optional the name of the new directory (openml-docker-dev)]
+git clone -b [Select correct branch] https://github.com/openml/openml-docker-dev.git [Optional the name of the new directory (openml-docker-dev)]
 
 cd [name of directory]
 ```
@@ -51,7 +51,7 @@ git clone -b docker https://github.com/OpenML/openml.org.git [Flask directory na
 
 * for PortML clone with
 ```
-git clone -b docker https://github.com/PortML/openml.org.git [Flask directory name (openml.org)]
+git clone -b docker https://github.com/PortML/openml.org-docker.git [Flask directory name (openml.org)]
 ```
 
 ### Step 2: Set structure for storage folder
@@ -185,8 +185,10 @@ The first command only needs to be run the first time, or every time when the pe
 Execute in a new window/shell: 
 
 ```
-docker exec -it openml-docker-dev_website_1 php index.php cron init_local_env
+docker exec -it openml-docker-dev-website-1 php index.php cron init_local_env
 ```
+
+The username and API key of the admin is displayed. Copy these and fill them in in the ``docker-compose.yml`` file in the ``website`` service under ``environment`` and then the ``API_USERNAME`` and ``API_KEY``
 
 (take note the printed admin username and password, and wait to finish, can take 1-2mins)
 

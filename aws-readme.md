@@ -77,3 +77,8 @@ jsonContent:
 	]
 }
 ```
+
+### Run PhP my admin for AWS (if port is open)
+```
+docker run --name myadmin -d -e PMA_HOST=[IP of task] -p 8000:80 phpmyadmin
+```
