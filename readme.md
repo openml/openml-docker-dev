@@ -1,3 +1,6 @@
+> [!NOTE]
+> See [services](https://www.github.com/openml/services) for a maintained docker compose setup of OpenML services.
+
 # OpenML Docker compose images/scripts for local development setup (Linux/Windows)
 
 ## **For local dev environment setup only, Insecure & Not for Production Setup**
