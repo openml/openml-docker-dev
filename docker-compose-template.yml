@@ -1,0 +1,139 @@
+# OpenML dev docker-compose
+# For local dev environment setup
+# *Insecure & Not for Production Setup*
+
+# Notes:
+# issues: Rui Quintino,https://github.com/rquintino
+# config folder is used to share some config keys after init between containers
+# $ needs escaping to $$ in docker_compose file, $api_key is then $$api_key
+# TODO: gollum not working, CORS issue, needs apache mapping, local gollum install on website container?
+# OpenML main repo is mapped as volume, not copied within the built images, for enable development
+
+version: '2'
+
+services:
+  # MySQL dbs
+  mysql:
+    image: mysql:5.7.25
+    container_name: mysql_test
+    platform: linux/x86_64
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3307:3306'
+    build: ./mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "root_password"
+      MYSQL_DATABASE: openml
+    volumes:
+      - ./storage/mysql:/storage
+
+  #Flask + React website
+  website_new:
+    build:
+      context: ./
+      dockerfile: ./website-new/Dockerfile
+      args:
+        - sourceDirectory=openml.org
+    ports:
+      - "5000:5000"
+    links:
+      - mysql
+    depends_on:
+      - mysql
+      - elasticsearch
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DATABASE_URI=mysql+pymysql://root:[fil-in PASSWORD]@[fill-in MYSQL_CONTAINER_NAME]:3306/[fill-in DATABASE_NAME]
+      - ELASTICSEARCH_SERVER=[ES_URL_SECURED]
+      - ELASTICSEARCH_CONTAINER_URL=[ES_URL]
+      - APP_SECRET_KEY=abcd
+      - JWT_SECRET_KEY=abcd
+      - SERVER_URL=http://website_new:5000/
+      - REDIRECT_URL=http://website_new:5000
+      - BACKEND_SERVER=http://website/api/v1/xml/
+      - BACKEND_BASE_URL=http://website/
+      - BACKEND_CONTAINER_URL=http://website/
+      - SEND_EMAIL=False
+      - DASHBOARD_USE_DOCKER_CONTAINER_NAME=FALSE
+      - DASHBOARD_PHP_CONTAINER_NAME=website
+      - AUTH_URL_PREFIX=/secure
+      - REQUIRE_CONFIRMED_REGISTERING=False
+      - EXTERNAL_WEBISTE_URL=http://localhost:5000/
+
+  # Elastic search indexes
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.2
+    build: ./elasticsearch
+    command: elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - ./storage/es:/esdata
+
+  # Php website
+  website:
+    build:
+      context: ./
+      dockerfile: ./website/Dockerfile
+      args:
+        - sourceDirectory=OpenML
+    ports:
+      - 80:80
+    volumes:
+      - ./config:/openmlconfig
+      - ./storage/datastore:/datastore
+    depends_on:
+      - mysql
+      - elasticsearch
+    environment:
+      DB_NAME_OPENML: 'openml'
+      DB_HOST_OPENML: "mysql_test"
+      DB_USER_OPENML: 'username'
+      DB_PASS_OPENML: 'user_password'
+      DB_NAME_EXPDB: 'openml_expdb'
+      DB_HOST_EXPDB: "mysql_test"
+      DB_USER_EXPDB_READ: 'username'
+      DB_PASS_EXPDB_READ: 'user_password'
+      DB_USER_EXPDB_WRITE: 'username'
+      DB_PASS_EXPDB_WRITE: 'user_password'
+      ES_URL: 'elasticsearch:9200'
+      ES_PUBLIC_URL: 'localhost:9200'
+      BASE_URL: 'http://localhost/'
+      DATA_PATH: '/datastore/'
+      DIRECTORY_PATH: '/var/www/html/'
+      API_USERNAME: 'fill in'
+      API_KEY: 'fill in'
+
+  # MySQL admin UI (tool)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    volumes:
+      - ./config:/openmlconfig
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=mysql
+    depends_on:
+      - mysql
+
+  # OpenML Java background workers
+  java:
+    build: ./java
+    image: amazoncorretto
+    volumes:
+      - ./config:/openmlconfig
+      - ./openmlsource/:/openmlsource
+    entrypoint: /entrypoint.sh
+
+  minio:
+    build: ./minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./storage/minio:/data
+    environment:
+      MINIO_ROOT_USER: FILL-IN
+      MINIO_ROOT_PASSWORD: FILL-IN
+    command: server --console-address ":9001" /data
